@@ -1,0 +1,25 @@
+{
+    "acKind": "ImageManifest",
+    "acVersion": "0.6.1",
+    "name": "aci.gonyeo.com/znc",
+    "labels": [
+        {"name": "os", "value": "linux"},
+        {"name": "arch", "value": "amd64"}
+    ],
+    "app": {
+        "exec": [
+            "/usr/bin/znc",
+            "--allow-root",
+            "--foreground"
+        ],
+        "user": "0",
+        "group": "0",
+        "mountPoints": [
+            {
+                "name": "configs",
+                "path": "/root/.znc/",
+                "readOnly": false
+            }
+        ]
+    }
+}
