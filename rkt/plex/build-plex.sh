@@ -6,6 +6,9 @@ wget -nc aci.gonyeo.com/ubuntu-latest-linux-amd64.aci
 # Begin the build
 acbuild --debug init ubuntu-latest-linux-amd64.aci
 
+# Name the aci
+acbuild --debug name aci.gonyeo.com/plex
+
 # Download and install plex
 acbuild --debug exec -- /usr/bin/apt-get update
 acbuild --debug exec -- /usr/bin/apt-get install -y wget

@@ -1,0 +1,15 @@
+[Unit]
+Description=A RKT Container Running Plex
+Documentation=https://github.com/dgonyeo/containers/rkt/plex
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/derek/go/bin/rkt run aci.gonyeo.com/plex --volume config,kind=host,source=/home/derek/.config/plex --volume media,kind=host,source=/home/derek/Media
+Restart=always
+RestartSec=60
+KillMode=mixed
+
+[Install]
+Alias=plex
+WantedBy=multi-user.target
