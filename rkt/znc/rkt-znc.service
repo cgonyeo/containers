@@ -1,0 +1,15 @@
+[Unit]
+Description=A RKT Container Running ZNC
+Documentation=https://github.com/dgonyeo/containers/rkt/znc
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/derek/go/bin/rkt run aci.gonyeo.com/znc --volume configs,kind=host,source=/home/derek/.config/znc
+Restart=always
+RestartSec=60
+KillMode=mixed
+
+[Install]
+Alias=znc
+WantedBy=multi-user.target
