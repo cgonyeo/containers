@@ -1,0 +1,10 @@
+[Unit]
+Description=rkt's mds service
+
+[Service]
+ExecStart=/home/derek/go/bin/rkt metadata-service
+KillMode=mixed
+Restart=always
+
+[Install]
+WantedBy=default.target
