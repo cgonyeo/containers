@@ -1,21 +1,18 @@
-set -e
-
-# Won't be necessary once dependencies are properly working
-wget -nc aci.gonyeo.com/ubuntu-latest-linux-amd64.aci
-
 # Begin the build
-acbuild --debug init ubuntu-latest-linux-amd64.aci
+acbuild --debug init
 
 # Name the aci
 acbuild --debug name aci.gonyeo.com/plex
 
+acbuild add-dep aci.gonyeo.com/ubuntu
+
 # Download and install plex
-acbuild --debug exec -- /usr/bin/apt-get update
-acbuild --debug exec -- /usr/bin/apt-get install -y wget
-acbuild --debug exec -- /usr/bin/wget https://downloads.plex.tv/plex-media-server/0.9.12.11.1406-8403350/plexmediaserver_0.9.12.11.1406-8403350_amd64.deb
-acbuild --debug exec -- /usr/bin/dpkg -i plexmediaserver_0.9.12.11.1406-8403350_amd64.deb
-acbuild --debug exec -- /bin/rm plexmediaserver_0.9.12.11.1406-8403350_amd64.deb
-acbuild --debug exec -- /bin/rm -f ./rootfs/var/cache/apt/archives/*.deb ./rootfs/var/cache/apt/archives/partial/*.deb ./rootfs/var/cache/apt/*.bin
+acbuild --debug exec -- apt-get update
+acbuild --debug exec -- apt-get install -y wget
+acbuild --debug exec -- wget https://downloads.plex.tv/plex-media-server/0.9.12.11.1406-8403350/plexmediaserver_0.9.12.11.1406-8403350_amd64.deb
+acbuild --debug exec -- dpkg -i plexmediaserver_0.9.12.11.1406-8403350_amd64.deb
+acbuild --debug exec -- rm plexmediaserver_0.9.12.11.1406-8403350_amd64.deb
+acbuild --debug exec -- rm -f ./rootfs/var/cache/apt/archives/*.deb ./rootfs/var/cache/apt/archives/partial/*.deb ./rootfs/var/cache/apt/*.bin
 
 # Set environment variables for plex
 acbuild --debug add-env PLEX_MEDIA_SERVER_APPLICATION_SUPPORT_DIR "/var/lib/plexmediaserver/Library/Application Support"
