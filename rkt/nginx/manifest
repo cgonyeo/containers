@@ -24,7 +24,8 @@
         "ports": [
             {
                 "name": "http",
-                "port": 80
+                "port": 80,
+                "protocol": "tcp"
             }
         ]
     }

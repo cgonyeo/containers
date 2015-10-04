@@ -1,0 +1,15 @@
+[Unit]
+Description=A RKT Container Running Derek's Blog
+Documentation=https://github.com/dgonyeo/containers/rkt/blog
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/derek/go/bin/rkt run aci.gonyeo.com/nginx --volume html,kind=host,source=/home/derek/git/blog/_site --private-net=all --port=http:8765
+Restart=always
+RestartSec=60
+KillMode=mixed
+
+[Install]
+Alias=blog
+WantedBy=multi-user.target
