@@ -3,7 +3,7 @@ set -e
 
 acbuild --debug begin
 
-trap "{ export EXT=$?; acbuild --debug end; exit $EXT; }" EXIT
+trap "{ export EXT=$?; acbuild --debug end && exit $EXT; }" EXIT
 
 acbuild --debug dep add aci.gonyeo.com/nginx
 acbuild --debug copy _site /usr/html
