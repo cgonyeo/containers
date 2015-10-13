@@ -3,7 +3,7 @@ set -e
 
 acbuild --debug begin
 
-trap "acbuild --debug abort" EXIT
+trap "{ acbuild --debug abort; exit 1; }" EXIT
 
 acbuild --debug dep add aci.gonyeo.com/nginx
 acbuild --debug copy git/blog/_site /usr/html
