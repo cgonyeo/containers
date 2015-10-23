@@ -1,10 +1,22 @@
-go get -d github.com/appc/acserver
+#!/usr/bin/env bash
+set -e
 
-goaci go github.com/appc/acserver
+echo "Building acserver..."
+CGO_ENABLED=0 GOOS=linux go build -o acserver -a -tags netgo -ldflags '-w' github.com/appc/acserver
 
-acbuild --debug begin acserver.aci
-acbuild --debug copy $GOPATH/src/github.com/appc/acserver/templates .
+acbuild --debug begin
+
+trap "{ export EXT=$?; acbuild --debug end && exit $EXT; }" EXIT
+
+acbuild --debug set-name aci.gonyeo.com/acserver
+acbuild --debug copy acserver /bin/acserver
+acbuild --debug copy $GOPATH/src/github.com/appc/acserver/templates /templates
+acbuild --debug set-exec /bin/acserver 
+acbuild --debug port add http tcp 3001
 acbuild --debug mount add acis /acis
-acbuild --debug set-exec "/acserver"
-acbuild --debug set-name "aci.gonyeo.com/acserver"
-acbuild --debug end --overwrite acserver.aci
+acbuild --debug label add arch amd64
+acbuild --debug label add os linux
+acbuild --debug anno add author "Derek Gonyeo <derek@gonyeo.com"
+acbuild --debug write --overwrite acserver-latest-linux-amd64.aci
+
+rm acserver
