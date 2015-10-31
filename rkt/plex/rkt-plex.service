@@ -5,7 +5,7 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStart=/home/derek/go/bin/rkt run aci.gonyeo.com/plex --volume config,kind=host,source=/home/derek/.config/plex --volume media,kind=host,source=/home/derek/Media
+ExecStart=/home/derek/go/bin/rkt run aci.gonyeo.com/plex --volume config,kind=host,source=/home/derek/.config/plex --volume media,kind=host,source=/home/derek/Media --net=host
 Restart=always
 RestartSec=60
 KillMode=mixed
