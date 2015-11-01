@@ -35,10 +35,14 @@ acbuild --debug environment add LANG en_US.UTF-8
 
 # Set plex to be the run command
 acbuild --debug set-exec "/usr/lib/plexmediaserver/Plex Media Server"
+acbuild --debug set-event-handler post-stop -- "/bin/rm" "-rf" "/var/lib/plexmediaserver/Library/Application Support/Plex Media Server/plexmediaserver.pid"
 
 # Add mount points for configs and media
 acbuild --debug mount add config "/var/lib/plexmediaserver/Library/Application Support"
 acbuild --debug mount add media /media --read-only
+
+# Add a port for plex traffic
+acbuild --debug port add https tcp 32400
 
 # Finish the build
 acbuild --debug write --overwrite plex.aci
