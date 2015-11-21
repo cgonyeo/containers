@@ -6,7 +6,10 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
-acbuildend () { export EXT=$?; acbuild --debug end && exit $EXT; }
+acbuildend () {
+    export EXT=$?;
+    acbuild --debug end && exit $EXT;
+}
 
 acbuild --debug begin quay.io/coreos/alpine-sh
 trap acbuildend EXIT
