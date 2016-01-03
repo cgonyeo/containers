@@ -25,12 +25,12 @@ acbuild --debug dep add aci.gonyeo.com/alpine
 
 # Install znc
 acbuild --debug run -- apk update
-acbuild --debug run -- apk add znc znc-extra znc-dev g++ openssl-dev
+acbuild --debug run -- apk add znc znc-extra znc-dev ca-certificates g++ openssl-dev
 
-#acbuild --debug run -- adduser -h /home/zncuser -D -u 1000 zncuser
-
+# Add the znc home directory
 acbuild --debug run -- mkdir -p /home/zncuser
 
+# Pull down znc-push, build it, install it, perform cleanup
 git clone https://github.com/jreese/znc-push.git
 acbuild --debug copy znc-push /root/znc-push
 rm -rf znc-push
@@ -38,11 +38,11 @@ acbuild --debug run -- znc-buildmod /root/znc-push/push.cpp
 acbuild --debug run -- mv push.so /usr/lib/znc/push.so
 acbuild --debug run -- rm -rf /root/znc-push
 
-#acbuild --debug set-eh pre-start -- /bin/sh -c 'cp /root/push.so /home/zncuser/.znc/moddata/push.so; exit 0'
-
+# Set the right user perms on the znc home directory
 acbuild --debug run -- chown -R $USER:$GROUP /home/zncuser
 
-acbuild --debug run -- apk del znc-dev g++ #openssl-dev
+# Remove packages that were only needed for building modules
+acbuild --debug run -- apk del znc-dev g++ openssl-dev
 
 # Run znc in the foreground
 acbuild --debug set-exec -- /usr/bin/znc --foreground
