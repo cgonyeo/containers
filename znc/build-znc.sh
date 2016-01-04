@@ -25,7 +25,7 @@ acbuild --debug dep add aci.gonyeo.com/alpine
 
 # Install znc
 acbuild --debug run -- apk update
-acbuild --debug run -- apk add znc znc-extra znc-dev ca-certificates g++ openssl-dev
+acbuild --debug run -- apk add znc znc-extra znc-dev ca-certificates g++ openssl-dev openssl curl
 
 # Add the znc home directory
 acbuild --debug run -- mkdir -p /home/zncuser
@@ -41,8 +41,12 @@ acbuild --debug run -- rm -rf /root/znc-push
 # Set the right user perms on the znc home directory
 acbuild --debug run -- chown -R $USER:$GROUP /home/zncuser
 
+# Install the hackint ssl cert
+acbuild --debug run -- curl -o /root/hackint.crt https://www.hackint.org/crt/rootca.crt
+acbuild --debug run -- /bin/sh -c 'ln -s /root/hackint.crt $(openssl x509 -noout -in  /root/hackint.crt -hash)'
+
 # Remove packages that were only needed for building modules
-acbuild --debug run -- apk del znc-dev g++ openssl-dev
+acbuild --debug run -- apk del znc-dev g++ openssl-dev openssl curl
 
 # Run znc in the foreground
 acbuild --debug set-exec -- /usr/bin/znc --foreground
