@@ -43,7 +43,7 @@ acbuild --debug run -- chown -R $USER:$GROUP /home/zncuser
 
 # Install the hackint ssl cert
 acbuild --debug run -- curl -o /root/hackint.crt https://www.hackint.org/crt/rootca.crt
-acbuild --debug run -- /bin/sh -c 'ln -s /root/hackint.crt $(openssl x509 -noout -in  /root/hackint.crt -hash)'
+acbuild --debug run -- /bin/sh -c 'ln -s /root/hackint.crt /etc/ssl/certs/$(openssl x509 -noout -in  /root/hackint.crt -hash).0'
 
 # Remove packages that were only needed for building modules
 acbuild --debug run -- apk del znc-dev g++ openssl-dev openssl curl
