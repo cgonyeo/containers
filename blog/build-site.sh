@@ -28,4 +28,4 @@ acbuild --debug set-name "aci.gonyeo.com/blog"
 acbuild --debug set-exec -- "/usr/sbin/nginx" "-g" "daemon off;"
 
 # Write the image
-acbuild --debug write blog-latest-linux-amd64.aci
+acbuild --debug write --overwrite blog-latest-linux-amd64.aci
