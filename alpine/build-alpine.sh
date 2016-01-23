@@ -20,4 +20,4 @@ acbuild --debug run -- /bin/sh -c 'chmod 755 /'
 
 acbuild --debug copy resolv.conf /etc/resolv.conf
 
-acbuild --debug write --overwrite alpine.aci
+acbuild --debug write --overwrite alpine-latest-linux-amd64.aci
